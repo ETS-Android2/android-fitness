@@ -1,0 +1,27 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- custom prev and next button -->
+    <style name="CustomButton_prev">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@drawable/ic_baseline_navigate_before_24</item>
+    </style>
+    <style name="CustomButton_next">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@drawable/ic_baseline_navigate_next_24</item>
+    </style>
+    <style name="CustomButton_play_pause">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@drawable/ic_baseline_pause_24</item>
+    </style>
+    <style name="CustomButton_play">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@drawable/ic_baseline_play_arrow_24</item>
+    </style>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlayCourseActivity">
+
+
+    <com.google.android.exoplayer2.ui.StyledPlayerView
+        android:id="@+id/player_view"
+        app:controller_layout_id="@layout/exo_styled_player_control_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:show_timeout='0'
+        app:shutter_background_color="#ffffff"
+        app:animation_enabled="false"
+        app:hide_on_touch="false"
+        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/play_course_modal"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#6D6875">
+
+        <Button
+            android:id="@+id/play_course_btn"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            style="@style/CustomButton_play"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/play_course_imageView"/>
+        <ImageView
+            android:id="@+id/play_course_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/play_course_btn"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
