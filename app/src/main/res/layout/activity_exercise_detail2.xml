@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ExerciseDetailActivity2">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <com.google.android.exoplayer2.ui.StyledPlayerView
+                android:id="@+id/exercise_detail2_player_view"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                app:animation_enabled="true"
+                app:use_controller="false"
+                app:shutter_background_color="#ffffff" />
+
+            <TextView
+                android:id="@+id/exercise_detail2_title"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:layout_marginTop="15dp"
+                android:paddingStart="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="Steps"
+                android:layout_marginVertical="5dp"
+                android:paddingStart="10dp"/>
+
+            <TextView
+                android:id="@+id/exercise_detail2_steps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginVertical="5dp"
+                android:paddingStart="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="Breathe"
+                android:layout_marginVertical="5dp"
+                android:paddingStart="10dp"/>
+
+            <TextView
+                android:id="@+id/exercise_detail2_breathe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginVertical="5dp"
+                android:paddingStart="10dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="Muscle Indication"
+                android:layout_marginVertical="5dp"
+                android:paddingStart="10dp"/>
+            <LinearLayout
+                android:id="@+id/exercise_detail2_imagesGroup"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:orientation="horizontal">
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="Movement Feeling"
+                android:layout_marginVertical="5dp"
+                android:paddingStart="10dp"/>
+
+            <TextView
+                android:id="@+id/exercise_detail2_movementFeeling"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginVertical="5dp"
+                android:paddingStart="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="Common Mistakes"
+                android:layout_marginVertical="5dp"
+                android:paddingStart="10dp"/>
+
+            <TextView
+                android:id="@+id/exercise_detail2_commonMistakes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginVertical="5dp"
+                android:paddingStart="10dp"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

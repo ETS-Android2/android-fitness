@@ -24,4 +24,8 @@
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:background">@drawable/ic_baseline_play_arrow_24</item>
     </style>
+    <style name="CustomButton_exit">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@drawable/ic_baseline_stop_24</item>
+    </style>
 </resources>

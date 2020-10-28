@@ -134,7 +134,7 @@ public class CourseFragment extends Fragment {
                 movementfeelingPics.add(ds2.child("1").getValue(String.class));
             }
             List<String> commonMistakes = new ArrayList<>();
-            for (DataSnapshot ds2 : ds.child("commonMistakes").getChildren()) {
+            for (DataSnapshot ds2 : ds.child("commonmistakes").getChildren()) {
                 commonMistakes.add(ds2.child("1").getValue(String.class));
             }
 
@@ -153,7 +153,7 @@ public class CourseFragment extends Fragment {
      */
     private Course getCourse(DataSnapshot courseDs, List<Exercise> exercises) {
         if (courseDs.exists()) {
-            Log.d("chenxirui", "inside getCourse: ");
+            //Log.d("chenxirui", "inside getCourse: ");
             DataSnapshot metaDs = courseDs.child("meta");
             int id = metaDs.child("id").getValue(Integer.class);
             String title = metaDs.child("title").getValue(String.class);
@@ -161,7 +161,7 @@ public class CourseFragment extends Fragment {
             String ctype = metaDs.child("ctype").getValue(String.class);
             String image = metaDs.child("image").getValue(String.class);
             Course course = new Course(id, title, detail, image, ctype, exercises);
-            Log.d("chenxirui", "getCourse: " + title);
+            //Log.d("chenxirui", "getCourse: " + title);
             return  course;
         }
         return null;

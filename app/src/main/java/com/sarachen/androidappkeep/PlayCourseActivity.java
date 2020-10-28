@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
 
+import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,7 +35,6 @@ public class PlayCourseActivity extends AppCompatActivity {
     private Bundle bundle;//course and userId
     private Course course;
     private int userId;
-    private ImageView pauseImageView;
     private SimpleExoPlayer player;
     private StyledPlayerView playerView;
     private AppCompatImageButton exoPlayPauseBtn;
@@ -49,9 +49,9 @@ public class PlayCourseActivity extends AppCompatActivity {
         bundle = getIntent().getExtras();
         course = Parcels.unwrap(bundle.getParcelable("course_parcel"));
         userId = bundle.getInt("userId");
-        //set pauseImageView
-        pauseImageView = (ImageView)findViewById(R.id.play_course_imageView);
+
         buidPlayer();
+        setOnClickListenerForPauseBtn();
 
     }
     private void buidPlayer() {
@@ -83,37 +83,9 @@ public class PlayCourseActivity extends AppCompatActivity {
         player.addListener(new Player.EventListener() {
             @Override
             public void onMediaItemTransition(@Nullable MediaItem mediaItem, int reason) {
-                //Log.d("chenxirui", "onMediaItemTransition: " + mediaItem.mediaId);
-                //insert image displayed on pause-detail
-                if (mediaItem.mediaId.charAt(0) != 'h') {
-                    int index = Integer.parseInt(mediaItem.mediaId);
-                    Exercise exercise = course.getExercises().get(index);
-                    String image = exercise.getImageUrl();
-                    imageStorageRef = storage.getReferenceFromUrl(image.trim());
-                    GlideApp  
-                            .with(getApplicationContext())
-                            .load(imageStorageRef)
-                            .placeholder(R.drawable.ic_launcher_foreground)
-                            .into(pauseImageView);
-                }
+                player.setPlayWhenReady(true);
             }
         });
-
-        exoPlayPauseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (player.isPlaying()) {
-                    findViewById(R.id.play_course_modal).setVisibility(View.VISIBLE);
-                    player.setPlayWhenReady(false);
-                }
-                else {
-                    findViewById(R.id.play_course_modal).setVisibility(View.INVISIBLE);
-                    player.setPlayWhenReady(true);
-                }
-
-            }
-        });
-
         // Prepare the player.
         player.prepare();
         // Start the playback.
@@ -121,5 +93,28 @@ public class PlayCourseActivity extends AppCompatActivity {
         player.play();
     }
 
+    public void setOnClickListenerForPauseBtn() {
+        exoPlayPauseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (player.isPlaying()) {
+                    player.setPlayWhenReady(false);
+                    MediaItem item = player.getCurrentMediaItem();
+                    if (item.mediaId.charAt(0) != 'h') {
+                        int index = Integer.parseInt(item.mediaId);
+                        Exercise exercise = course.getExercises().get(index);
+                        Intent intent = new Intent(getApplicationContext(), ExerciseDetailActivity.class);
+                        Bundle itemBundle = new Bundle();
+                        itemBundle.putParcelable("exercise_parcel", Parcels.wrap(exercise));
+                        intent.putExtras(itemBundle);
+                        startActivityForResult(intent, 4000);
+                    }
+                }
+                else {
+                    player.setPlayWhenReady(true);
+                }
+            }
+        });
+    }
 
 }
