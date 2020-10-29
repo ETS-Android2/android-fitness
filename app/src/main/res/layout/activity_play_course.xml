@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:show_timeout='0'
-        app:shutter_background_color="#ffffff"
+        app:shutter_background_color="#EBECF0"
+        android:background="#EBECF0"
         app:animation_enabled="false"
         app:hide_on_touch="false"
         />

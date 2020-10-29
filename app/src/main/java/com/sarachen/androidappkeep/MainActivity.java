@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
 
 import com.sarachen.androidappkeep.model.Course;
 import com.sarachen.androidappkeep.model.CourseFragment;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements CourseFragment.Co
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         CourseFragment courseFragment = new CourseFragment();
         //add fragment-------------------------------------------------------

@@ -15,7 +15,7 @@
         app:touch_target_height="0dp"
         app:scrubber_enabled_size="0dp" />
 
-    <ImageButton android:id="@id/exo_play_pause"
+    <ImageButton android:id="@+id/exo_play_pause_btn"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center|bottom"
@@ -32,19 +32,65 @@
         android:layout_height="100dp"
         android:layout_gravity="center|bottom|end"
         style="@style/CustomButton_next"/>
+
+
     <TextView
-        android:id="@+id/exo_duration"
+        android:paddingStart="8dp"
+        android:id="@+id/exo_current_time_remain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|end"/>
+        android:layout_marginTop="30dp"
+        android:textSize="30dp"
+        android:text="39"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_medium_numbers"
+        android:layout_gravity="top|start"/>
     <TextView
-        android:id="@+id/exo_position"
+        android:paddingStart="8dp"
+        android:id="@+id/exo_current_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|start"/>
-
-
-
-
+        android:layout_marginBottom="240dp"
+        android:textSize="30dp"
+        android:text="39"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_medium_numbers"
+        android:layout_gravity="bottom|start"/>
+    <TextView
+        android:paddingStart="8dp"
+        android:id="@+id/exo_current_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="170dp"
+        android:textSize="40dp"
+        android:text="39"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_medium_numbers"
+        android:layout_gravity="bottom|start"/>
+    <TextView
+        android:paddingStart="8dp"
+        android:id="@+id/exo_current_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="110dp"
+        android:textSize="25dp"
+        android:text="39"
+        android:maxLength="20"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_medium_numbers"
+        android:layout_gravity="bottom|start"/>
+    <TextView
+        android:id="@+id/exo_see_notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="110dp"
+        android:textSize="15dp"
+        android:text="NOTES"
+        android:padding="10dp"
+        android:layout_marginEnd="8dp"
+        android:textStyle="bold"
+        android:background="@drawable/notes_background"
+        android:fontFamily="@font/roboto_medium_numbers"
+        android:layout_gravity="bottom|end"/>
 
 </FrameLayout>

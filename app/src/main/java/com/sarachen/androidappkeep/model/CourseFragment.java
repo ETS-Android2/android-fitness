@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ public class CourseFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
 
-    private int mColumnCount = 1;
+    private int mColumnCount = 2;
     DatabaseReference db = Database.DB;
     private List<Course> courses;// all courses in database
     private CourseOnClickListener listener;
@@ -89,7 +90,9 @@ public class CourseFragment extends Fragment {
                     if (mColumnCount <= 1) {
                         recyclerView.setLayoutManager(new LinearLayoutManager(context));
                     } else {
-                        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                        StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                        recyclerView.setLayoutManager(gridLayoutManager);
+                        //recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount, GridLayoutManager.VERTICAL, false));
                     }
                     adapter = new CourseRecyclerViewAdapter(courses, listener);
                     recyclerView.setAdapter(adapter);
