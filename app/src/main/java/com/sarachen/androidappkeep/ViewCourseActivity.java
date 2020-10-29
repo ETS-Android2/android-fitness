@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.sarachen.androidappkeep.helper.GlideApp;
 import com.sarachen.androidappkeep.model.Course;
-import com.sarachen.androidappkeep.model.CourseFragment;
 import com.sarachen.androidappkeep.model.Exercise;
 import com.sarachen.androidappkeep.model.ExerciseFragment;
 

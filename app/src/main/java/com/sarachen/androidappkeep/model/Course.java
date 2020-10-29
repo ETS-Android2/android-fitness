@@ -11,7 +11,6 @@ public class Course {
 
     public Course() {
     }
-
     public Course(int id, String title, String detail, String image, String type, List<Exercise> exercises) {
         this.id = id;
         this.title = title;
