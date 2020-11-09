@@ -5,8 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ExerciseDetailActivity2">
-
+    android:background="@color/colorAccent"
+    tools:context=".ui.play.ExerciseDetailFragment">
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="?attr/colorPrimary"
+        android:backgroundTint="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <Button
+            android:id="@+id/exercise_detail_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Back"
+            android:textColor="@color/colorAccent"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/ic_baseline_navigate_before_24_white"/>
+    </Toolbar>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

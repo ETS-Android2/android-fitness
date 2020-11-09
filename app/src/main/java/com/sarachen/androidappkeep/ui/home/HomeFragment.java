@@ -12,18 +12,34 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.sarachen.androidappkeep.R;
-import com.sarachen.androidappkeep.dummy.DummyContent;
+import com.sarachen.androidappkeep.database.Database;
+import com.sarachen.androidappkeep.database.DatabaseHelper;
+import com.sarachen.androidappkeep.model.Constants;
+import com.sarachen.androidappkeep.model.Course;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 2;
-    int userId = 1;
+    private int mColumnCount = 1;
+
+    private static DatabaseReference db = Database.DB;
+    private DatabaseReference coursesDf, userDf;
+    private List<Course> coursesByUser = new ArrayList<>();
+    private List<Integer> courseIdsByUser = new ArrayList<>();
+    private int userId = Constants.USER_ID;
+    private HomeFragment.CourseOnClickListener listener;
+    private HomeCourseRecyclerViewAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -44,7 +60,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -53,30 +68,61 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_home_course_list, container, false);
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+        final View view = inflater.inflate(R.layout.fragment_home_course_list, container, false);
+        //receive courses and userId
+        coursesDf = db.child("courses");
+        userDf = db.child("users");
+        userDf.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                courseIdsByUser = DatabaseHelper.getCoursesIdsByUserId(snapshot, userId);
             }
-            recyclerView.setAdapter(new HomeCourseRecyclerViewAdapter(DummyContent.ITEMS));
-        }
-        else {
-            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.home_recycler_view_course_list);
-            Context context = recyclerView.getContext();
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-                recyclerView.setLayoutManager(gridLayoutManager);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("chenxirui", error.getMessage());
             }
-            Log.d("================================", "onCreateView: " + DummyContent.ITEMS.size());
-            recyclerView.setAdapter(new HomeCourseRecyclerViewAdapter(DummyContent.ITEMS));
-        }
+        });
+        coursesDf.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                coursesByUser = DatabaseHelper.getCoursesByUserId(dataSnapshot, courseIdsByUser);
+
+                // Set the adapter
+                Context context = null;
+                RecyclerView recyclerView = null;
+                if (view instanceof RecyclerView) {
+                    recyclerView = (RecyclerView) view;
+                    context = view.getContext();
+                }
+                else {
+                    recyclerView = (RecyclerView) view.findViewById(R.id.home_recycler_view_course_list);
+                    context = recyclerView.getContext();
+                }
+                if (mColumnCount <= 1) {
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                } else {
+                    recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                }
+                adapter = new HomeCourseRecyclerViewAdapter(coursesByUser, listener);
+                recyclerView.setAdapter(adapter);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("chenxirui", error.getMessage());
+            }
+        });
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        listener = (HomeFragment.CourseOnClickListener) context;
+    }
+    /*
+     * CourseOnClickListener interface
+     */
+    public interface CourseOnClickListener {
+        void onCLickCourse(Course course);
     }
 }

@@ -13,20 +13,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity0">
+            android:name=".ui.MainActivity0">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ExerciseDetailActivity2" />
+
         <activity
-            android:name=".ExerciseDetailActivity"
+            android:name=".ui.play.PlayCourseActivity"
             android:theme="@style/AppThemeFullScreen" />
-        <activity
-            android:name=".PlayCourseActivity"
-            android:theme="@style/AppThemeFullScreen" />
-        <activity android:name=".ViewCourseActivity" />
+
         <!--
         <activity android:name=".MainActivity">
         </activity>

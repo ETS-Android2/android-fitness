@@ -1,21 +1,18 @@
-package com.sarachen.androidappkeep.model;
+package com.sarachen.androidappkeep.ui.viewCourse;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.sarachen.androidappkeep.R;
 import com.sarachen.androidappkeep.helper.GlideApp;
-import com.squareup.picasso.Picasso;
+import com.sarachen.androidappkeep.model.Exercise;
 
 import java.util.List;
 

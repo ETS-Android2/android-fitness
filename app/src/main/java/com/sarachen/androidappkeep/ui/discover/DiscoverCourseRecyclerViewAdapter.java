@@ -47,7 +47,7 @@ public class DiscoverCourseRecyclerViewAdapter extends RecyclerView.Adapter<Disc
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onCLick(mValues.get(position));
+                listener.onCLickCourse(mValues.get(position));
             }
         });
     }

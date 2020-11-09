@@ -1,18 +1,13 @@
-package com.sarachen.androidappkeep;
+package com.sarachen.androidappkeep.ui.play;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageButton;
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.MediaItem;
@@ -23,18 +18,16 @@ import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.sarachen.androidappkeep.helper.GlideApp;
+import com.sarachen.androidappkeep.R;
 import com.sarachen.androidappkeep.model.Course;
 import com.sarachen.androidappkeep.model.Exercise;
 
 import org.parceler.Parcels;
-import org.w3c.dom.Text;
 
-import java.util.EventListener;
 import java.util.concurrent.TimeUnit;
 
 
-public class PlayCourseActivity extends AppCompatActivity {
+public class PlayCourseActivity extends AppCompatActivity implements PauseCourseFragment.ShowExerciseDetailInterface {
     FirebaseStorage storage ;
     StorageReference imageStorageRef;
     private Bundle bundle;//course and userId
@@ -119,12 +112,18 @@ public class PlayCourseActivity extends AppCompatActivity {
                     MediaItem item = player.getCurrentMediaItem();
                     if (item.mediaId.charAt(0) != 'h') {
                         int index = Integer.parseInt(item.mediaId);
+
+                        PauseCourseFragment pauseCourseFragment = new PauseCourseFragment();
                         Exercise exercise = course.getExercises().get(index);
-                        Intent intent = new Intent(getApplicationContext(), ExerciseDetailActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), PauseCourseFragment.class);
                         Bundle itemBundle = new Bundle();
                         itemBundle.putParcelable("exercise_parcel", Parcels.wrap(exercise));
-                        intent.putExtras(itemBundle);
-                        startActivityForResult(intent, 4000);
+                        pauseCourseFragment.setArguments(itemBundle);
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.course_play_main_frame, pauseCourseFragment)
+                                .addToBackStack(null)
+                                .commit();
                     }
                 }
                 else {
@@ -198,4 +197,14 @@ public class PlayCourseActivity extends AppCompatActivity {
         thread.start();
     }
 
+    @Override
+    public void showExerciseDetail(Bundle bundle) {
+        ExerciseDetailFragment exerciseDetailFragment = new ExerciseDetailFragment();
+        exerciseDetailFragment.setArguments(bundle);
+        getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.course_play_main_frame, exerciseDetailFragment)
+            .addToBackStack(null)
+            .commit();
+    }
 }

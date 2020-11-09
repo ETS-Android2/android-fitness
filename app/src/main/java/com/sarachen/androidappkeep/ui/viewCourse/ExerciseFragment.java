@@ -1,4 +1,4 @@
-package com.sarachen.androidappkeep.model;
+package com.sarachen.androidappkeep.ui.viewCourse;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.sarachen.androidappkeep.R;
+import com.sarachen.androidappkeep.model.Course;
 
 import org.parceler.Parcels;
 

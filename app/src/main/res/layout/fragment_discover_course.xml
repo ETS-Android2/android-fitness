@@ -14,30 +14,34 @@
                 android:layout_height="match_parent"
                 android:contentDescription="course image"
                 android:scaleType="centerCrop" />
-            <TextView
-                android:id="@+id/course_title"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#ffffff"
-                android:text="title"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="4dp"
-                android:fontFamily="@font/roboto_medium_numbers"
-                android:layout_alignParentBottom="true"/>
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="#886D6875">
+                <TextView
+                    android:id="@+id/course_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
+                    android:text="title"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="4dp"
+                    android:fontFamily="@font/roboto_medium_numbers" />
 
-            <TextView
-                android:id="@+id/course_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#ffffff"
-                android:text="type"
-                android:textSize="13dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="4dp"
-                android:fontFamily="@font/roboto_medium_numbers"
-                android:layout_alignParentEnd="true"/>
+                <TextView
+                    android:id="@+id/course_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ffffff"
+                    android:text="type"
+                    android:textSize="13dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="4dp"
+                    android:fontFamily="@font/roboto_medium_numbers" />
+            </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

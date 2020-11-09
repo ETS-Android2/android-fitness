@@ -1,18 +1,18 @@
-package com.sarachen.androidappkeep;
+package com.sarachen.androidappkeep.ui.play;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -20,6 +20,7 @@ import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.sarachen.androidappkeep.R;
 import com.sarachen.androidappkeep.model.Exercise;
 import com.squareup.picasso.Picasso;
 
@@ -27,7 +28,7 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-public class ExerciseDetailActivity2 extends AppCompatActivity {
+public class ExerciseDetailFragment extends Fragment {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private Bundle bundle;
     private Exercise exercise;
@@ -37,24 +38,28 @@ public class ExerciseDetailActivity2 extends AppCompatActivity {
     private TextView titleView, stepsView, breatheView, movementFeelingView, commonMistakesView;
     private LinearLayout imageGroup;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exercise_detail2);
+        View view = inflater.inflate(R.layout.fragment_exercise_detail, container, false);
+        //setContentView(R.layout.fragment_exercise_detail);
         // get exercise
-        bundle = getIntent().getExtras();
+        bundle = getArguments();
         exercise = Parcels.unwrap(bundle.getParcelable("exercise_parcel"));
         //setup all views
-        player = new SimpleExoPlayer.Builder(getApplicationContext()).build();
-        playerView = (StyledPlayerView)findViewById(R.id.exercise_detail2_player_view);
-        titleView = (TextView) findViewById(R.id.exercise_detail2_title);
-        stepsView = (TextView) findViewById(R.id.exercise_detail2_steps);
-        breatheView = (TextView) findViewById(R.id.exercise_detail2_breathe);
-        movementFeelingView = (TextView) findViewById(R.id.exercise_detail2_movementFeeling);
-        commonMistakesView = (TextView) findViewById(R.id.exercise_detail2_commonMistakes);
-        imageGroup = (LinearLayout)findViewById(R.id.exercise_detail2_imagesGroup);
+        player = new SimpleExoPlayer.Builder(getContext()).build();
+        playerView = (StyledPlayerView)view.findViewById(R.id.exercise_detail2_player_view);
+        titleView = (TextView) view.findViewById(R.id.exercise_detail2_title);
+        stepsView = (TextView) view.findViewById(R.id.exercise_detail2_steps);
+        breatheView = (TextView) view.findViewById(R.id.exercise_detail2_breathe);
+        movementFeelingView = (TextView) view.findViewById(R.id.exercise_detail2_movementFeeling);
+        commonMistakesView = (TextView) view.findViewById(R.id.exercise_detail2_commonMistakes);
+        imageGroup = (LinearLayout)view.findViewById(R.id.exercise_detail2_imagesGroup);
 
         putContent();
+        addOnclickListener(view);
         buildPlayer();
+        return view;
     }
 
     private void putContent(){
@@ -77,8 +82,8 @@ public class ExerciseDetailActivity2 extends AppCompatActivity {
     private void putMovementFeelingPics() {
         List<String> urls = exercise.getMoveFeelingPictures();
         for (String url : urls) {
-            ImageView imgView = new ImageView(getApplicationContext());
-            Picasso.Builder builder = new Picasso.Builder(getApplicationContext());
+            ImageView imgView = new ImageView(getContext());
+            Picasso.Builder builder = new Picasso.Builder(getContext());
             builder.listener(new Picasso.Listener() {
                 @Override
                 public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
@@ -105,5 +110,14 @@ public class ExerciseDetailActivity2 extends AppCompatActivity {
         player.prepare();
         player.seekTo(0);
         player.play();
+    }
+    private void addOnclickListener(View view) {
+        Button btn = (Button)view.findViewById(R.id.exercise_detail_back_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
     }
 }
