@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +38,7 @@ import com.sarachen.androidappkeep.model.LoggedInUser;
  */
 public class RegisterFragment extends Fragment {
     private LoginViewModel loginViewModel;
-
+    private View view;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,13 +85,14 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_register, container, false);
+        view =  inflater.inflate(R.layout.fragment_register, container, false);
 
         final EditText usernameEditText = view.findViewById(R.id.register_username);
         final EditText passwordEditText = view.findViewById(R.id.register_password);
         final EditText emailEditText = view.findViewById(R.id.register_email);
         final Button registerButton = view.findViewById(R.id.register_btn);
         final  Button registerBackButton = view.findViewById(R.id.register_back_btn);
+        final ProgressBar loadingProgressBar = view.findViewById(R.id.loading);
 
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
@@ -116,6 +118,7 @@ public class RegisterFragment extends Fragment {
                 if (loginOrRegisterResult == null) {
                     return;
                 }
+                loadingProgressBar.setVisibility(View.GONE);
                 if (loginOrRegisterResult.getError() != null) {
                     showRegisterFailed(loginOrRegisterResult.getError());
                 }
@@ -146,6 +149,7 @@ public class RegisterFragment extends Fragment {
         passwordEditText.addTextChangedListener(afterTextChangedListener);
 
         registerButton.setOnClickListener(v -> {
+            loadingProgressBar.setVisibility(View.VISIBLE);
             DatabaseReference users = Database.DB.child("users");
             String username = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
@@ -172,10 +176,11 @@ public class RegisterFragment extends Fragment {
     }
 
     private void updateUiWithUser(LoggedInUserView success) {
+        view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
         Toast.makeText(getContext(), "Register Succeed", Toast.LENGTH_LONG).show();
         new Handler(Looper.getMainLooper()).postDelayed((Runnable) () -> {
             getActivity().getSupportFragmentManager().popBackStack();
-        }, 1000);
+        }, 3000);
 
     }
 

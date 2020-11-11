@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -80,9 +82,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginOrRegisterResult.getSuccess() != null) {
                     updateUiWithUser(loginOrRegisterResult.getSuccess());
-                    setResult(Activity.RESULT_OK);
-                    //Complete and destroy login activity once successful
-                    finish();
                 }
 
             }
@@ -109,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText.addTextChangedListener(afterTextChangedListener);
 
         loginButton.setOnClickListener(v -> {
+            loadingProgressBar.setVisibility(View.VISIBLE);
             DatabaseReference users = Database.DB.child("users");
             String username = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
@@ -116,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     LoggedInUser user = DatabaseHelper.getUser(snapshot, username, password);
-                    loadingProgressBar.setVisibility(View.VISIBLE);
                     loginViewModel.loginOrRegister(user);
                 }
                 @Override
@@ -138,12 +137,19 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
+        findViewById(R.id.loading).setVisibility(View.VISIBLE);
+        String welcome = getString(R.string.welcome) + model.getDisplayName();
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         Constants.user = model.getUser();
-        Intent intent = new Intent(this, MainActivity0.class);
-        startActivity(intent);
+        new Handler(Looper.getMainLooper()).postDelayed((Runnable) () -> {
+            setResult(Activity.RESULT_OK);
+            //Complete and destroy login activity once successful
+            finish();
+            //start new activity
+            Intent intent = new Intent(this, MainActivity0.class);
+            startActivity(intent);
+        }, 3000);
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {

@@ -63,7 +63,7 @@
                             android:layout_above="@+id/course_exercise_courseDetail"
                             android:layout_marginVertical="10dp"
                             android:layout_marginStart="@dimen/text_margin"
-                            android:fontFamily="@font/roboto_medium_numbers"
+                            android:fontFamily="@font/comfortaa"
                             android:text="testtesttesttitletitletitle"
                             android:textColor="@color/colorAccent"
                             android:textSize="23dp" />
@@ -74,7 +74,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_marginStart="@dimen/text_margin"
-                            android:fontFamily="@font/roboto_medium_numbers"
+                            android:fontFamily="@font/comfortaa"
                             android:maxLines="3"
                             android:paddingBottom="40dp"
                             android:text="descdescdescdescdescdescdesc"
@@ -88,10 +88,10 @@
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
                             android:background="#11ffffff"
-                            android:fontFamily="@font/roboto_medium_numbers"
+                            android:fontFamily="@font/momcake_bold"
                             android:text="see more"
                             android:textColor="@color/colorAccent"
-                            android:textSize="10dp"
+                            android:textSize="14dp"
                             android:textStyle="bold" />
                     </RelativeLayout>
                 </RelativeLayout>
@@ -119,8 +119,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="CALORIES"
                                 android:textColor="@color/colorPrimaryDark"
-                                android:fontFamily="@font/roboto_medium_numbers"
-                                android:textSize="17dp"
+                                android:fontFamily="@font/comfortaa_bold"
+                                android:textSize="13dp"
                                 android:textStyle="bold"/>
                             <TextView
                                 android:layout_width="match_parent"
@@ -146,8 +146,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="DURATION"
                                 android:textColor="@color/colorPrimaryDark"
-                                android:fontFamily="@font/roboto_medium_numbers"
-                                android:textSize="17dp"
+                                android:fontFamily="@font/comfortaa_bold"
+                                android:textSize="13dp"
                                 android:textStyle="bold"/>
                             <TextView
                                 android:layout_width="match_parent"
@@ -173,8 +173,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="DIFFICULTY"
                                 android:textColor="@color/colorPrimaryDark"
-                                android:fontFamily="@font/roboto_medium_numbers"
-                                android:textSize="17dp"
+                                android:fontFamily="@font/comfortaa_bold"
+                                android:textSize="13dp"
                                 android:textStyle="bold"/>
                             <TextView
                                 android:layout_width="match_parent"
@@ -211,6 +211,8 @@
             android:layout_gravity="bottom"
             android:background="@color/colorPrimary"
             android:textColor="@color/colorAccent"
+            android:fontFamily="@font/momcake_bold"
+            android:textSize="20dp"
             android:text="Enter"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
