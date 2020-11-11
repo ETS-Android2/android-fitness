@@ -2,6 +2,7 @@ package com.sarachen.androidappkeep.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sarachen.androidappkeep.R;
@@ -12,16 +13,22 @@ import com.sarachen.androidappkeep.ui.play.PlayCourseActivity;
 import com.sarachen.androidappkeep.ui.viewCourse.ViewCourseFragment;
 import com.sarachen.androidappkeep.ui.home.HomeFragment;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import org.parceler.Parcels;
 
-public class MainActivity0 extends AppCompatActivity implements DiscoverFragment.CourseOnClickListener, HomeFragment.CourseOnClickListener, ViewCourseFragment.ViewCourseToPlayCourse {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
+public class MainActivity0 extends AppCompatActivity implements DiscoverFragment.CourseOnClickListener, HomeFragment.CourseOnClickListener, ViewCourseFragment.ViewCourseToPlayCourse {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,7 @@ public class MainActivity0 extends AppCompatActivity implements DiscoverFragment
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_community, R.id.navigation_notifications)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
     }
@@ -41,19 +49,18 @@ public class MainActivity0 extends AppCompatActivity implements DiscoverFragment
     when click a course, go to view course fragment
      */
     @Override
-    public void onCLickCourse(Course course) {
+    public void onCLickCourse(Course course, boolean isEnrolled, Set<Integer> courseIdsByUser) {
         ViewCourseFragment viewCourseFragment = new ViewCourseFragment();
         Bundle itemBundle = new Bundle();
         itemBundle.putParcelable("course_parcel", Parcels.wrap(course));
-        itemBundle.putInt("userId", Constants.USER_ID);
+        itemBundle.putParcelable("user_parcel", Parcels.wrap(Constants.user));
+        itemBundle.putBoolean("isEnrolled", isEnrolled);
         viewCourseFragment.setArguments(itemBundle);
 
-//        getSupportFragmentManager().beginTransaction().
-//                remove(getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment)).commit();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_frame, viewCourseFragment)
-                .addToBackStack(null)
+                .replace(R.id.main_frame, viewCourseFragment,"viewCourseFgTag")
+                .addToBackStack("viewCourseFg")
                 .commit();
     }
     /*

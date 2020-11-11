@@ -11,7 +11,10 @@ import android.widget.TextView;
 import com.sarachen.androidappkeep.R;
 import com.sarachen.androidappkeep.model.Course;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Course}.
@@ -21,10 +24,12 @@ public class HomeCourseRecyclerViewAdapter extends RecyclerView.Adapter<HomeCour
 
     private final List<Course> mValues;
     private HomeFragment.CourseOnClickListener listener;
+    private Set<Integer> courseIdsByUser = new HashSet<>();
 
-    public HomeCourseRecyclerViewAdapter(List<Course> items, HomeFragment.CourseOnClickListener listener) {
+    public HomeCourseRecyclerViewAdapter(List<Course> items, HomeFragment.CourseOnClickListener listener, Set<Integer> courseIdsByUser) {
         mValues = items;
         this.listener = listener;
+        this.courseIdsByUser = courseIdsByUser;
     }
 
     @Override
@@ -42,7 +47,7 @@ public class HomeCourseRecyclerViewAdapter extends RecyclerView.Adapter<HomeCour
         holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onCLickCourse(mValues.get(position));
+                listener.onCLickCourse(mValues.get(position), true, courseIdsByUser);
             }
         });
     }

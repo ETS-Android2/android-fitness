@@ -23,11 +23,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.sarachen.androidappkeep.R;
 import com.sarachen.androidappkeep.database.Database;
 import com.sarachen.androidappkeep.database.DatabaseHelper;
+import com.sarachen.androidappkeep.model.Constants;
 import com.sarachen.androidappkeep.model.Course;
 import com.sarachen.androidappkeep.model.Exercise;
+import com.sarachen.androidappkeep.model.LoggedInUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class DiscoverFragment extends Fragment {
 
@@ -37,7 +40,8 @@ public class DiscoverFragment extends Fragment {
     private int mColumnCount = 2;
     DatabaseReference db = Database.DB;
     DatabaseReference coursesDf;
-    private List<Course> courses;// all courses in database
+    private LoggedInUser user = Constants.user;
+    private List<Course> courses;// all courses
     private DiscoverFragment.CourseOnClickListener listener;
     private DiscoverCourseRecyclerViewAdapter adapter;
     private VideoView videoView;
@@ -111,7 +115,7 @@ public class DiscoverFragment extends Fragment {
                     StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(gridLayoutManager);
                 }
-                adapter = new DiscoverCourseRecyclerViewAdapter(courses, listener);
+                adapter = new DiscoverCourseRecyclerViewAdapter(courses, listener, user.getCourses());
                 recyclerView.setAdapter(adapter);
             }
             @Override
@@ -142,7 +146,7 @@ public class DiscoverFragment extends Fragment {
      * CourseOnClickListener interface
      */
     public interface CourseOnClickListener {
-        void onCLickCourse(Course course);
+        void onCLickCourse(Course course, boolean isEnrolled, Set<Integer> courseIdsByUser);
     }
 
 }

@@ -2,12 +2,21 @@ package com.sarachen.androidappkeep.database;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.sarachen.androidappkeep.model.Course;
 import com.sarachen.androidappkeep.model.Exercise;
+import com.sarachen.androidappkeep.model.LoggedInUser;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class DatabaseHelper {
 
@@ -22,7 +31,7 @@ public class DatabaseHelper {
      * @param DataSnapshot of the current course
      */
     public static List<Exercise> getExercises(DataSnapshot courseDs) {
-        Log.d("chenxirui","inside getExercises");
+        //Log.d("chenxirui","inside getExercises");
         List<Exercise> exercises = new ArrayList<>();
         DataSnapshot exercisesDs = courseDs.child("exercises");
         int id = 0;
@@ -85,7 +94,7 @@ public class DatabaseHelper {
     * Returns a list of Course
     * @param DataSnapshot of the current course, a list of exercises, userId
      */
-    public static List<Course> getCoursesByUserId(DataSnapshot dataSnapshot, List<Integer> courseIds) {
+    public static List<Course> getCoursesByUserId(DataSnapshot dataSnapshot, Set<Integer> courseIds) {
         List<Course> courses = new ArrayList<>();
         for (DataSnapshot courseDs : dataSnapshot.getChildren()) {
             if (courseDs.exists()) {
@@ -120,5 +129,63 @@ public class DatabaseHelper {
             if (coursesByUser.charAt(i) != ' ') coursesIds.add(Integer.parseInt(String.valueOf(coursesByUser.charAt(i))));
         }
         return coursesIds;
+    }
+
+    /*
+    add a course to user
+     */
+    public static void addCourse(int userId, int courseId, Set<Integer> courseIdsByUser) {
+        courseIdsByUser.add(courseId);
+        String res = courseIdsByUser.stream().map(String::valueOf)
+                .collect(Collectors.joining(" "));
+        DatabaseReference userDfByUserId = Database.DB.child("users").child(String.valueOf(userId));
+        userDfByUserId.child("courses").setValue(res)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("chenxirui", "addCourse: succeed");
+                })
+                .addOnFailureListener(e -> {
+                    Log.d("chenxirui", "addCourse: failed");
+                });
+    }
+
+    /*
+    get User from login
+     */
+    public static LoggedInUser getUser(DataSnapshot snapshot, String username, String password) {
+        for (DataSnapshot userDs : snapshot.getChildren()) {
+            String uname = userDs.child("username").getValue(String.class);
+            String passwd = userDs.child("password").getValue(String.class);
+            String id = userDs.child("id").getValue(String.class);
+            String email = userDs.child("email").getValue(String.class);
+            String coursesByUser = userDs.child("courses").getValue(String.class);
+            if (uname.equals(username) && passwd.equals(password)) {
+                Set<Integer> coursesIds = new HashSet<>();
+                for (int i = 0; i < coursesByUser.length(); i++) {
+                    if (coursesByUser.charAt(i) != ' ') coursesIds.add(Integer.parseInt(String.valueOf(coursesByUser.charAt(i))));
+                }
+                return new LoggedInUser(username, password, email, id, coursesIds);
+            }
+        }
+        return null;
+    }
+
+
+    public static LoggedInUser register(DataSnapshot snapshot, String username, String password, String email) {
+        int count = 0;
+        for (DataSnapshot userDs : snapshot.getChildren()) {
+            count++;
+            String uname = userDs.child("username").getValue(String.class);
+            if (uname.equals(username)) return null;
+        }
+
+        Set<Integer> coursesIds = new HashSet<>();
+        DatabaseReference newChild = Database.DB.child("users").child(String.valueOf(count + 1));
+        newChild.child("id").setValue(String.valueOf(count + 1));
+        newChild.child("username").setValue(username);
+        newChild.child("password").setValue(password);
+        newChild.child("email").setValue(email);
+        newChild.child("courses").setValue("");
+
+        return new LoggedInUser(username, password, email, String.valueOf(count + 1), coursesIds);
     }
 }

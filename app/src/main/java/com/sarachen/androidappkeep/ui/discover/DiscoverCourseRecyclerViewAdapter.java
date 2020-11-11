@@ -12,7 +12,10 @@ import com.sarachen.androidappkeep.R;
 import com.sarachen.androidappkeep.model.Course;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Course}.
@@ -22,10 +25,13 @@ public class DiscoverCourseRecyclerViewAdapter extends RecyclerView.Adapter<Disc
 
     private final List<Course> mValues;
     private DiscoverFragment.CourseOnClickListener listener;
+    private Set<Integer> courseIdsByUser = new HashSet<>();
 
-    public DiscoverCourseRecyclerViewAdapter(List<Course> items, DiscoverFragment.CourseOnClickListener listener) {
+    public DiscoverCourseRecyclerViewAdapter(List<Course> items, DiscoverFragment.CourseOnClickListener listener, Set<Integer> courseIdsByUser) {
         mValues = items;
         this.listener = listener;
+        this.courseIdsByUser = courseIdsByUser;
+
     }
 
     @Override
@@ -47,7 +53,13 @@ public class DiscoverCourseRecyclerViewAdapter extends RecyclerView.Adapter<Disc
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onCLickCourse(mValues.get(position));
+                Set<Integer> courseIdsByUserSet = new HashSet<>(courseIdsByUser);
+                if (courseIdsByUserSet.contains(mValues.get(position).getId()))
+                    //if course is already added to user
+                    listener.onCLickCourse(mValues.get(position), true, courseIdsByUser);
+                else
+                //if course is not added by user
+                listener.onCLickCourse(mValues.get(position), false, courseIdsByUser);
             }
         });
     }
