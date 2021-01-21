@@ -17,13 +17,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.sarachen.androidappkeep.R;
 import com.sarachen.androidappkeep.database.Database;
 import com.sarachen.androidappkeep.database.DatabaseHelper;
-import com.sarachen.androidappkeep.model.Constants;
+import com.sarachen.androidappkeep.model.Manager;
 import com.sarachen.androidappkeep.model.LoggedInUser;
 import com.sarachen.androidappkeep.ui.MainActivity0;
 
@@ -43,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
@@ -141,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.loading).setVisibility(View.VISIBLE);
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-        Constants.user = model.getUser();
+        Manager.user = model.getUser();
         new Handler(Looper.getMainLooper()).postDelayed((Runnable) () -> {
             setResult(Activity.RESULT_OK);
             //Complete and destroy login activity once successful

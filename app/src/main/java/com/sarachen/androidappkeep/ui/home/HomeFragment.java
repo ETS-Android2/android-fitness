@@ -20,11 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.sarachen.androidappkeep.R;
 import com.sarachen.androidappkeep.database.Database;
 import com.sarachen.androidappkeep.database.DatabaseHelper;
-import com.sarachen.androidappkeep.model.Constants;
+import com.sarachen.androidappkeep.model.Manager;
 import com.sarachen.androidappkeep.model.Course;
 import com.sarachen.androidappkeep.model.LoggedInUser;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +37,7 @@ public class HomeFragment extends Fragment {
 
     private static DatabaseReference db = Database.DB;
     private List<Course> coursesByUser = new ArrayList<>();
-    private LoggedInUser user = Constants.user;
+    private LoggedInUser user = Manager.user;
     private HomeFragment.CourseOnClickListener listener;
     private HomeCourseRecyclerViewAdapter adapter;
 

@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.sarachen.androidappkeep.R;
 import com.sarachen.androidappkeep.database.Database;
 import com.sarachen.androidappkeep.database.DatabaseHelper;
-import com.sarachen.androidappkeep.model.Constants;
+import com.sarachen.androidappkeep.model.Manager;
 import com.sarachen.androidappkeep.model.Course;
 import com.sarachen.androidappkeep.model.Exercise;
 import com.sarachen.androidappkeep.model.LoggedInUser;
@@ -40,7 +40,7 @@ public class DiscoverFragment extends Fragment {
     private int mColumnCount = 2;
     DatabaseReference db = Database.DB;
     DatabaseReference coursesDf;
-    private LoggedInUser user = Constants.user;
+    private LoggedInUser user = Manager.user;
     private List<Course> courses;// all courses
     private DiscoverFragment.CourseOnClickListener listener;
     private DiscoverCourseRecyclerViewAdapter adapter;

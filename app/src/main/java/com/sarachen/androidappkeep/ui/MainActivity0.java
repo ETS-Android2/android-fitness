@@ -2,30 +2,24 @@ package com.sarachen.androidappkeep.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sarachen.androidappkeep.R;
-import com.sarachen.androidappkeep.model.Constants;
+import com.sarachen.androidappkeep.model.Manager;
 import com.sarachen.androidappkeep.model.Course;
 import com.sarachen.androidappkeep.ui.discover.DiscoverFragment;
 import com.sarachen.androidappkeep.ui.play.PlayCourseActivity;
 import com.sarachen.androidappkeep.ui.viewCourse.ViewCourseFragment;
 import com.sarachen.androidappkeep.ui.home.HomeFragment;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 public class MainActivity0 extends AppCompatActivity implements DiscoverFragment.CourseOnClickListener, HomeFragment.CourseOnClickListener, ViewCourseFragment.ViewCourseToPlayCourse {
@@ -53,7 +47,7 @@ public class MainActivity0 extends AppCompatActivity implements DiscoverFragment
         ViewCourseFragment viewCourseFragment = new ViewCourseFragment();
         Bundle itemBundle = new Bundle();
         itemBundle.putParcelable("course_parcel", Parcels.wrap(course));
-        itemBundle.putParcelable("user_parcel", Parcels.wrap(Constants.user));
+        itemBundle.putParcelable("user_parcel", Parcels.wrap(Manager.user));
         itemBundle.putBoolean("isEnrolled", isEnrolled);
         viewCourseFragment.setArguments(itemBundle);
 
