@@ -1,7 +1,7 @@
 # Introduction
-* **Cross platform application (Android & IOS)**
+* **Android Fitness App**
 * Designed and implemented an online course app where users can attend/drop more than 120 video workouts, interact with other users and their broadcasts in the app’s forum.
-* Implemented the Android & IOS app with MVC architecture, Android Gradle, CocoaPods for XCode and Google Firebase Database.
+* Implemented the Android app with MVC architecture, Android Gradle, Google Firebase Database.
 * Developed a data crawling and cloud-uploading tool with Python urllib3, lxml and google.cloud library for fetching and uploading more than 120 videos, 400 images, text instructions required in the application. 
 * Created more than 50 APIs to search/sort/add/update courses, post/comment/like broadcasts, comment/follow/unfollow users from 15 tables (JSON tree) in database.
 * Designed and created data models and more than 110 key/value pairs in the non-relational database.
